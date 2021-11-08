@@ -6,11 +6,14 @@ import 'package:flutter_bloc_network/widgets/action_buttons.dart';
 import 'package:flutter_bloc_network/widgets/user_list.dart';
 
 class HomePage extends StatelessWidget {
-  final usersRepository = UsersRepository();
+  final usersRepository =
+      UsersRepository(); //пременная репозитория, с помощью которой буем связываться
 
   @override
   Widget build(BuildContext context) {
+    //оборачиваем в блок провайдер, котоырй принимает UserBloc
     return BlocProvider<UserBloc>(
+      //возвращаем UserBloc и передаем ему репозиторий
       create: (context) => UserBloc(usersRepository),
       child: Scaffold(
         backgroundColor: Colors.white,

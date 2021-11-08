@@ -5,21 +5,34 @@ import 'package:flutter_bloc_network/models/user.dart';
 import 'package:flutter_bloc_network/services/user_preository.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  final UsersRepository usersRepository;
+  //класс блок наследующийся от библиотеки блок
+  //которому передаем евенты и состояния
+  final UsersRepository
+      usersRepository; //создаем переменную для подключения хранилища
 
-  UserBloc(this.usersRepository) : super(UserEmptyState());
+  UserBloc(this.usersRepository)
+      : super(
+            UserEmptyState()); //конструктор принимающий репозиторий и передаем стартовое состояние
 
   @override
   Stream<UserState> mapEventToState(UserEvent event) async* {
+    //метод асинхронный работающий с потоком куда прокидываем переменные и состояния
     if (event is UserLoadEvent) {
-      yield UserLoadingState();
+      //проверяем евент, если загружен
+      yield UserLoadingState(); //прокидываем класс в поток загрузки
       try {
-        final List<User> _loadedUserList = await usersRepository.getAllUsers();
-        yield UserLoadedState(loadedUser: _loadedUserList);
+        //ловим загрузку пользователей
+        final List<User> _loadedUserList = await usersRepository
+            .getAllUsers(); //вспомогательная переменная которая берет
+        //репозиторий и запрашивает получить всех юзеры
+        yield UserLoadedState(
+            loadedUser:
+                _loadedUserList); //прокидываем следующее состояние и передаем список полученный выше
       } catch (_) {
-        yield UserErrorState();
+        yield UserErrorState(); //если поймали ошибку вызываем состояние ошибки
       }
     } else if (event is UserClearEvent) {
+      //если нажимаем на очистку, устанавливаем состояние очистки
       yield UserEmptyState();
     }
   }

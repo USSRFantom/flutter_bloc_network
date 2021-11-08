@@ -7,14 +7,16 @@ import 'package:flutter_bloc_network/bloc/user_event.dart';
 class ActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final UserBloc userBloc = BlocProvider.of<UserBloc>(context);
+    final UserBloc userBloc =
+        BlocProvider.of<UserBloc>(context); //создаем переменную блока
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         RaisedButton(
           child: Text('Load'),
           onPressed: () {
-            userBloc.add(UserLoadEvent());
+            userBloc.add(
+                UserLoadEvent()); //при нажатии на кнопку опрокидываем событие загрузки
           },
           color: Colors.green,
         ),
@@ -22,7 +24,8 @@ class ActionButtons extends StatelessWidget {
         RaisedButton(
           child: Text('Clear'),
           onPressed: () {
-            userBloc.add(UserClearEvent());
+            userBloc.add(
+                UserClearEvent()); //при нажатии на кнопку опрокидываем событие очистки
           },
           color: Colors.red,
         ),

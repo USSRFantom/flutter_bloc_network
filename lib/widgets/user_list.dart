@@ -8,32 +8,34 @@ class UserList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+      //возвращаем блокбилдер
       if (state is UserEmptyState) {
+        //если состояние имеет пустой список
         return Center(
-          child: Text('No Data'),
+          child: Text('No Data'), //выводим текст нет данных
         );
       }
-
       if (state is UserLoadingState) {
+        //если состояние имеет стадию загрузки
         return Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(), //выводим прогрессбар
         );
       }
-
       if (state is UserLoadedState) {
+        //если состояние имеет загруженный список выводим наш список
         return ListView.builder(
-            itemCount: state.loadedUser.length,
+            itemCount: state.loadedUser.length, //считаем колличество элементов
             itemBuilder: (context, index) => Container(
                   color: index % 2 == 0 ? Colors.white : Colors.blue[50],
                   child: ListTile(
                     leading: Text(
-                      'ID: ${state.loadedUser[index].id}',
+                      'ID: ${state.loadedUser[index].id}', //устанавливаем значение id
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     title: Column(
                       children: [
                         Text(
-                          '${state.loadedUser[index].name}',
+                          '${state.loadedUser[index].name}', //устанавливаем значение имя
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Column(
@@ -56,11 +58,11 @@ class UserList extends StatelessWidget {
       }
 
       if (state is UserErrorState) {
+        //если состояние в ошибке
         return Center(
-          child: Text('Error'),
+          child: Text('Error'), //устанавливаем текст c jib,rjq
         );
       }
-
       return null;
     });
   }
