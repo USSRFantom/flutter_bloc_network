@@ -6,10 +6,8 @@ import 'package:flutter_bloc_network/services/user_preository.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UsersRepository usersRepository;
-  UserBloc({required this.usersRepository}) : assert(usersRepository != null);
 
-  @override
-  UserState get initialState => UserEmptyState();
+  UserBloc(this.usersRepository) : super(UserEmptyState());
 
   @override
   Stream<UserState> mapEventToState(UserEvent event) async* {
@@ -19,7 +17,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         final List<User> _loadedUserList = await usersRepository.getAllUsers();
         yield UserLoadedState(loadedUser: _loadedUserList);
       } catch (_) {
-        yield UserEmptyState();
+        yield UserErrorState();
       }
     } else if (event is UserClearEvent) {
       yield UserEmptyState();
